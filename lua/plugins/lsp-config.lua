@@ -23,8 +23,17 @@ return {
       lspconfig.tsserver.setup({
         capabilities = capabilities
       })
-      lspconfig.solargraph.setup({
-        capabilities = capabilities
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+          },
+        },
       })
       lspconfig.html.setup({
         capabilities = capabilities
