@@ -3,12 +3,10 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
-      local config = require("nvim-treesitter.configs")
-      config.setup({
-        auto_install = true,
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+      require("nvim-treesitter").setup()
+      -- Install parsers asynchronously (no-op if already installed).
+      -- Highlighting is enabled automatically by Neovim for installed parsers.
+      require("nvim-treesitter").install { "go", "lua", "vim", "vimdoc" }
     end
   }
 }
