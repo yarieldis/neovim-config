@@ -16,23 +16,20 @@ setup with a focus on Go, TypeScript/JavaScript, and web development.
 - 📁 **Neo-tree** file explorer and **Oil** floating file manager
 - 🧪 **vim-test** test runner using the `vimux` strategy
 - 🐙 **Git** integration with `vim-fugitive` and `gitsigns`
-- 🧹 **Formatting & linting** via `none-ls.nvim`
-  (stylua, prettier, gofumpt, goimports, golangci-lint, staticcheck)
-- 🪟 **Tmux** pane navigation with `nvim-tmux-navigation`
+- 🧹 **Formatting** via `conform.nvim` (prettier, stylua) with `gopls` for Go,
+  and **linting** via `nvim-lint` (golangci-lint)
 - 🚀 **Alpha** dashboard with a custom ASCII banner
 - 📄 **Swagger** OpenAPI preview
 
 ## Requirements
 
-- [Neovim](https://github.com/neovim/neovim/releases) **0.9+** (0.10+
-  recommended)
+- [Neovim](https://github.com/neovim/neovim/releases) **0.10+**
 - [Git](https://git-scm.com/)
 - A [Nerd Font](https://www.nerdfonts.com/) for icons
 - [Node.js](https://nodejs.org/) & `npm` (required by `swagger-preview.nvim`,
   which installs `swagger-ui-watcher` globally)
 - [Go](https://go.dev/) toolchain with `$(go env GOPATH)/bin` on your `PATH`
   (for `gopls`, `gofumpt`, `goimports`, etc.)
-- [tmux](https://github.com/tmux/tmux) (optional, for tmux navigation)
 - `ripgrep` (recommended, for Telescope's `live_grep`)
 
 ## Installation
@@ -81,13 +78,13 @@ setup with a focus on Go, TypeScript/JavaScript, and web development.
         ├── alpha.lua             # Dashboard (alpha-nvim)
         ├── catppuccin.lua        # Colorscheme
         ├── completions.lua       # nvim-cmp + LuaSnip + snippets
+        ├── conform.lua           # Formatting (conform.nvim)
         ├── git-stuff.lua         # fugitive + gitsigns
         ├── gitsigns.lua          # gitsigns (standalone)
         ├── go.lua                # Go toolkit (go.nvim)
+        ├── lint.lua              # Linting (nvim-lint)
         ├── lsp-config.lua        # Mason + lspconfig
         ├── neo-tree.lua          # File explorer
-        ├── none-ls.lua           # Formatting & diagnostics
-        ├── nvim-tmux-navigation.lua
         ├── oil.lua               # Floating file manager
         ├── swagger-preview.lua   # OpenAPI preview
         ├── telescope.lua         # Fuzzy finder
@@ -105,13 +102,13 @@ setup with a focus on Go, TypeScript/JavaScript, and web development.
 | Completion    | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp), [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp), [LuaSnip](https://github.com/L3MON4D3/LuaSnip), [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) |
 | LSP           | [mason.nvim](https://github.com/williamboman/mason.nvim), [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim), [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) |
 | Go            | [go.nvim](https://github.com/ray-x/go.nvim) |
-| Format/Lint   | [none-ls.nvim](https://github.com/nvimtools/none-ls.nvim) |
+| Formatting    | [conform.nvim](https://github.com/stevearc/conform.nvim) |
+| Linting       | [nvim-lint](https://github.com/mfussenegger/nvim-lint) |
 | Syntax        | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) |
 | Fuzzy finder  | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim), [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) |
 | File explorer | [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim), [oil.nvim](https://github.com/stevearc/oil.nvim) |
 | Git           | [vim-fugitive](https://github.com/tpope/vim-fugitive), [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) |
 | Testing       | [vim-test](https://github.com/vim-test/vim-test), [vimux](https://github.com/preservim/vimux) |
-| Tmux          | [nvim-tmux-navigation](https://github.com/alexghergh/nvim-tmux-navigation) |
 | Swagger       | [swagger-preview.nvim](https://github.com/vinnymeller/swagger-preview.nvim) |
 
 ## Keybindings
@@ -123,7 +120,7 @@ The leader key is set to `<Space>`.
 | Key | Action |
 | --- | ------ |
 | `<Space>` | Leader |
-| `<C-h/j/k/l>` | Navigate windows (also crosses tmux panes) |
+| `<C-h/j/k/l>` | Navigate windows |
 | `<Space>h` | Clear search highlight |
 
 ### File & Search
@@ -166,13 +163,15 @@ The leader key is set to `<Space>`.
 
 ## Language Servers & Tools
 
-The following servers, formatters, and linters are wired up by default
-(auto-installed through Mason):
+The following servers, formatters, and linters are wired up by default.
+LSP servers auto-install through Mason; formatters/linters run from binaries
+on your `PATH`.
 
-- **Go** — `gopls` (LSP), `gofumpt`/`goimports` (formatting), `staticcheck`/`golangci-lint` (linting)
-- **TypeScript/JavaScript** — `tsserver`, `prettier`
+- **Go** — `gopls` (LSP: formatting with gofumpt, diagnostics with staticcheck),
+  `golangci-lint` (linting via `nvim-lint`)
+- **TypeScript/JavaScript** — `tsserver`, `prettier` (via `conform.nvim`)
 - **HTML** — `html`
-- **Lua** — `lua_ls`, `stylua`
+- **Lua** — `lua_ls`, `stylua` (via `conform.nvim`)
 
 ## Notes
 
