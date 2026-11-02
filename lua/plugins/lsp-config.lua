@@ -9,22 +9,27 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     lazy = false,
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
     opts = {
-      auto_install = true,
+      ensure_installed = { "gopls", "ts_ls", "html", "lua_ls" },
+      automatic_enable = true,
     },
   },
   {
     "neovim/nvim-lspconfig",
     lazy = false,
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      local lspconfig = require("lspconfig")
-      lspconfig.tsserver.setup({
-        capabilities = capabilities
+      -- Default capabilities for all servers (enables nvim-cmp completion)
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
       })
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
+
+      -- Go language server settings
+      vim.lsp.config("gopls", {
         settings = {
           gopls = {
             analyses = {
@@ -35,12 +40,11 @@ return {
           },
         },
       })
-      lspconfig.html.setup({
-        capabilities = capabilities
-      })
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
+
+      vim.lsp.enable("gopls")
+      vim.lsp.enable("ts_ls")
+      vim.lsp.enable("html")
+      vim.lsp.enable("lua_ls")
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
