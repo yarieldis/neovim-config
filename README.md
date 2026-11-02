@@ -14,7 +14,8 @@ setup with a focus on Go, TypeScript/JavaScript, and web development.
 - 🌳 **Treesitter** syntax highlighting and indentation
 - 🔍 **Telescope** fuzzy finding with `ui-select`
 - 📁 **Neo-tree** file explorer and **Oil** floating file manager
-- 🧪 **vim-test** test runner using the `vimux` strategy
+- 🧪 **vim-test** test runner using the `neovim` strategy (runs in a Neovim
+  terminal, no tmux required)
 - 🐙 **Git** integration with `vim-fugitive` and `gitsigns`
 - 🧹 **Formatting** via `conform.nvim` (prettier, stylua) with `gopls` for Go,
   and **linting** via `nvim-lint` (golangci-lint)
@@ -108,7 +109,7 @@ setup with a focus on Go, TypeScript/JavaScript, and web development.
 | Fuzzy finder  | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim), [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) |
 | File explorer | [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim), [oil.nvim](https://github.com/stevearc/oil.nvim) |
 | Git           | [vim-fugitive](https://github.com/tpope/vim-fugitive), [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) |
-| Testing       | [vim-test](https://github.com/vim-test/vim-test), [vimux](https://github.com/preservim/vimux) |
+| Testing       | [vim-test](https://github.com/vim-test/vim-test) |
 | Swagger       | [swagger-preview.nvim](https://github.com/vinnymeller/swagger-preview.nvim) |
 
 ## Keybindings
@@ -142,7 +143,23 @@ The leader key is set to `<Space>`.
 | `<Space>gd` | Go to definition |
 | `<Space>gr` | References |
 | `<Space>ca` | Code action |
-| `<Space>gf` | Format buffer |
+
+### Formatting
+
+| Key | Action |
+| --- | ------ |
+| `<Space>gf` | Format buffer (conform.nvim) |
+
+### Completion
+
+Completion-menu mappings (insert mode):
+
+| Key | Action |
+| --- | ------ |
+| `<C-Space>` | Trigger completion |
+| `<C-e>` | Abort completion |
+| `<C-b>` / `<C-f>` | Scroll documentation up/down |
+| `<CR>` | Confirm selection |
 
 ### Git
 
@@ -161,6 +178,29 @@ The leader key is set to `<Space>`.
 | `<Space>l` | Run last test |
 | `<Space>g` | Visit test file |
 
+## Commands
+
+Useful Ex commands exposed by this configuration:
+
+| Command | Purpose |
+| --- | --- |
+| `:Mason` | Open the Mason UI to install/manage LSP servers, formatters, and linters |
+| `:ConformInfo` | Show formatter status and available formatters |
+| `:SwaggerPreview` | Preview the current OpenAPI/Swagger spec in a browser |
+| `:Neotree filesystem reveal left` | Open the file explorer in the left sidebar |
+| `:Neotree buffers reveal float` | Open a floating buffer list |
+| `:Oil` | Open the Oil file manager |
+| `:Gitsigns preview_hunk` | Preview the hunk under the cursor |
+| `:Gitsigns toggle_current_line_blame` | Toggle inline line blame |
+| `:TestNearest` | Run nearest test |
+| `:TestFile` | Run current test file |
+| `:TestSuite` | Run entire test suite |
+| `:TestLast` | Run last test |
+| `:TestVisit` | Jump to test file |
+
+The Go plugin (`go.nvim`) also provides many commands, including `:GoRun`,
+`:GoTest`, `:GoTestFunc`, `:GoBuild`, `:GoCoverage`, and `:GoDoc`.
+
 ## Language Servers & Tools
 
 The following servers, formatters, and linters are wired up by default.
@@ -169,7 +209,7 @@ on your `PATH`.
 
 - **Go** — `gopls` (LSP: formatting with gofumpt, diagnostics with staticcheck),
   `golangci-lint` (linting via `nvim-lint`)
-- **TypeScript/JavaScript** — `tsserver`, `prettier` (via `conform.nvim`)
+- **TypeScript/JavaScript** — `ts_ls`, `prettier` (via `conform.nvim`)
 - **HTML** — `html`
 - **Lua** — `lua_ls`, `stylua` (via `conform.nvim`)
 
